@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roulette.Access", "Roulette.Access\Roulette.Access.csproj", "{A352D538-6F0A-41E4-A438-A514362F1166}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roulette.Access", "Roulette.Access\Roulette.Access.csproj", "{A352D538-6F0A-41E4-A438-A514362F1166}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roulette.Domain", "Roulette.Domain\Roulette.Domain.csproj", "{72CBD607-FF2A-4553-80FE-6A1EA167C1C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roulette.Domain", "Roulette.Domain\Roulette.Domain.csproj", "{72CBD607-FF2A-4553-80FE-6A1EA167C1C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roulette.Entity", "Roulette.Entity\Roulette.Entity.csproj", "{3F0603AE-86CA-427B-A9D6-4B3E6D643783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roulette.Entity", "Roulette.Entity\Roulette.Entity.csproj", "{3F0603AE-86CA-427B-A9D6-4B3E6D643783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roulette.Service", "Roulette.Service\Roulette.Service.csproj", "{FC04ABE2-F658-41DF-BAB9-F2956F3A93B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roulette.Service", "Roulette.Service\Roulette.Service.csproj", "{FC04ABE2-F658-41DF-BAB9-F2956F3A93B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roulette.Helpers", "Roulette.Helpers\Roulette.Helpers.csproj", "{031AD6CD-2266-47F5-8C70-4F4F74E244FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FC04ABE2-F658-41DF-BAB9-F2956F3A93B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC04ABE2-F658-41DF-BAB9-F2956F3A93B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC04ABE2-F658-41DF-BAB9-F2956F3A93B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{031AD6CD-2266-47F5-8C70-4F4F74E244FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{031AD6CD-2266-47F5-8C70-4F4F74E244FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{031AD6CD-2266-47F5-8C70-4F4F74E244FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{031AD6CD-2266-47F5-8C70-4F4F74E244FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

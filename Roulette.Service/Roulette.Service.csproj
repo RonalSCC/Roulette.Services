@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Roulette.Domain\Roulette.Domain.csproj" />
     <ProjectReference Include="..\Roulette.Entity\Roulette.Entity.csproj" />
+    <ProjectReference Include="..\Roulette.Helpers\Roulette.Helpers.csproj" />
   </ItemGroup>
 
 </Project>
