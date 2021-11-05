@@ -6,11 +6,17 @@ using System.Data;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Linq;
+using Roulette.Helpers.General.Input;
 
 namespace Roulette.Access
 {
-    public class AccessRoulette
+    public static class AccessRoulette
     {
+        public static string connectionString = string.Empty;
+        /// <summary>
+        /// Method access DB to registers a new roulette
+        /// </summary>
+        /// <param name="roulette">Object EntityRoulette in case of specifying creation parameters</param>
         public static int Register_Roulette(EntityRoulette roulette)
         {
             string nomapi = System.Reflection.MethodBase.GetCurrentMethod().Name;
@@ -20,8 +26,7 @@ namespace Roulette.Access
             {
                 if (roulette != null)
                 {
-                    string cadenaConexion = "Data Source=(localdb)\\MSSQLLocalDB;DataBase=MasivePrueba;Integrated Security=true";
-                    SqlConnection cn = new SqlConnection(cadenaConexion);
+                    SqlConnection cn = new SqlConnection(connectionString);
                     cn.Open();
                     SqlCommand cmd = new SqlCommand("RUL.RegisterRoulette", cn);
                     cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 100)).Value = !string.IsNullOrEmpty(roulette.Name) ? roulette.Name : "Nueva Ruleta";
@@ -38,6 +43,7 @@ namespace Roulette.Access
             }
             catch (Exception ex)
             {
+                AccessLogWebApi.connectionString = connectionString;
                 AccessLogWebApi.RegisterLogWebAPI(new EntityLogWebApi
                 {
                     API = nomapi,
@@ -48,7 +54,10 @@ namespace Roulette.Access
                 return 0;
             }
         }
-
+        /// <summary>
+        /// Method access DB to update a Roulette
+        /// </summary>
+        /// <param name="roulette">Object EntityRoulette with modified parameters</param>
         public static EntityRoulette Update_Roulette(EntityRoulette roulette)
         {
             string nomapi = System.Reflection.MethodBase.GetCurrentMethod().Name;
@@ -57,8 +66,7 @@ namespace Roulette.Access
             {
                 if (roulette != null)
                 {
-                    string cadenaConexion = "Data Source=(localdb)\\MSSQLLocalDB;DataBase=MasivePrueba;Integrated Security=true";
-                    SqlConnection cn = new SqlConnection(cadenaConexion);
+                    SqlConnection cn = new SqlConnection(connectionString);
                     cn.Open();
                     SqlCommand cmd = new SqlCommand("RUL.UpdateRoulette", cn);
                     cmd.Parameters.Add(new SqlParameter("@RouletteID", SqlDbType.Int, 32)).Value = roulette.RouletteID;
@@ -71,7 +79,7 @@ namespace Roulette.Access
                     cn.Close();
 
                     var searchRoulette = Read_RouletteById(roulette.RouletteID);
-                    if (searchRoulette != null )
+                    if (searchRoulette != null)
                     {
                         rouletteUpdated = searchRoulette;
                     }
@@ -80,6 +88,7 @@ namespace Roulette.Access
             }
             catch (Exception ex)
             {
+                AccessLogWebApi.connectionString = connectionString;
                 AccessLogWebApi.RegisterLogWebAPI(new EntityLogWebApi
                 {
                     API = nomapi,
@@ -90,15 +99,16 @@ namespace Roulette.Access
                 return rouletteUpdated;
             }
         }
-
+        /// <summary>
+        /// Method access DB to search all Roulettes
+        /// </summary>
         public static List<EntityRoulette> Read_Roulettes()
         {
             string nomapi = System.Reflection.MethodBase.GetCurrentMethod().Name;
             List<EntityRoulette> list_Roulettes = new List<EntityRoulette>();
             try
             {
-                string cadenaConexion = "Data Source=(localdb)\\MSSQLLocalDB;DataBase=MasivePrueba;Integrated Security=true";
-                SqlConnection cn = new SqlConnection(cadenaConexion);
+                SqlConnection cn = new SqlConnection(connectionString);
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("RUL.ListRoulettes", cn);
                 cmd.Parameters.Add(new SqlParameter("@RouletteID", SqlDbType.Int, 32)).Value = null;
@@ -119,6 +129,7 @@ namespace Roulette.Access
             }
             catch (Exception ex)
             {
+                AccessLogWebApi.connectionString = connectionString;
                 AccessLogWebApi.RegisterLogWebAPI(new EntityLogWebApi
                 {
                     API = nomapi,
@@ -129,15 +140,17 @@ namespace Roulette.Access
                 return list_Roulettes;
             }
         }
-
+        /// <summary>
+        /// Method access DB to search a specific Roulette
+        /// </summary>
+        /// <param name="rouletteID">ID of the roulette that will be consulted</param>
         public static EntityRoulette Read_RouletteById(int? rouletteID)
         {
             string nomapi = System.Reflection.MethodBase.GetCurrentMethod().Name;
             EntityRoulette item_Roulette = new EntityRoulette();
             try
             {
-                string cadenaConexion = "Data Source=(localdb)\\MSSQLLocalDB;DataBase=MasivePrueba;Integrated Security=true";
-                SqlConnection cn = new SqlConnection(cadenaConexion);
+                SqlConnection cn = new SqlConnection(connectionString);
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("RUL.ListRoulettes", cn);
                 cmd.Parameters.Add(new SqlParameter("@RouletteID", SqlDbType.Int, 32)).Value = rouletteID;
@@ -156,6 +169,7 @@ namespace Roulette.Access
             }
             catch (Exception ex)
             {
+                AccessLogWebApi.connectionString = connectionString;
                 AccessLogWebApi.RegisterLogWebAPI(new EntityLogWebApi
                 {
                     API = nomapi,
@@ -167,5 +181,39 @@ namespace Roulette.Access
             }
         }
 
+        public static bool Finish_Roulette(InputFinish_Roulette info)
+        {
+            string nomapi = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            try
+            {
+                if (info == null)
+                {
+                    return false;
+                }
+
+                SqlConnection cn = new SqlConnection(connectionString);
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("RUL.FinishRoulette", cn);
+                cmd.Parameters.Add(new SqlParameter("@RouletteID", SqlDbType.Int, 32)).Value = info.RouletteID;
+                cmd.Parameters.Add(new SqlParameter("@BetWinnerID", SqlDbType.Int, 32)).Value = info.RouletteID;
+                cmd.Parameters.Add(new SqlParameter("@BetWinnerColorIDs", SqlDbType.VarChar)).Value = info.BetWinnerColorIDs;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AccessLogWebApi.connectionString = connectionString;
+                AccessLogWebApi.RegisterLogWebAPI(new EntityLogWebApi
+                {
+                    API = nomapi,
+                    Input = JsonConvert.SerializeObject(info),
+                    Output = JsonConvert.SerializeObject(ex),
+                    RegistrationDate = DateTime.Now
+                });
+                return false;
+            }
+        }
     }
 }

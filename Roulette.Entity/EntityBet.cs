@@ -12,5 +12,6 @@ namespace Roulette.Entity
         public decimal BetValue { get; set; }
         public int Number { get; set; }
         public bool Finished { get; set; }
+        public bool Winner { get; set; }
     }
 }

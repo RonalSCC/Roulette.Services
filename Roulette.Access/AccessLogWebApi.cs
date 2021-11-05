@@ -9,12 +9,12 @@ namespace Roulette.Access
 {
     public static class AccessLogWebApi
     {
+        public static string connectionString = string.Empty;
         public static bool RegisterLogWebAPI(EntityLogWebApi logWebApi)
         {
             try
             {
-                string cadenaConexion = "Data Source=(localdb)\\MSSQLLocalDB;DataBase=MasivePrueba;Integrated Security=true";
-                SqlConnection cn = new SqlConnection(cadenaConexion);
+                SqlConnection cn = new SqlConnection(connectionString);
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("LOGRUL.RegisterLogWebApi", cn);
                 cmd.Parameters.Add(new SqlParameter("@API", SqlDbType.VarChar, int.MaxValue)).Value = logWebApi.API;
